@@ -1,0 +1,281 @@
+openapi: 3.0.3
+info:
+  title: CustomerOrder API
+  description: |-
+    This is a sample Customer Orders Api
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: https://petstore3.swagger.io/api/v3
+tags:
+  - name: customer
+    description: Everything about the customers
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+  - name: order
+    description: Access to customer orders
+    externalDocs:
+      description: Find out more about our store
+      url: http://swagger.io
+paths:
+  /customer:
+    post:
+      tags:
+        - customer
+      summary: Add a new customer to the database
+      description: Add a new customer to the database
+      operationId: addCustomer
+      requestBody:
+        description: Create a new customer
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref : '#/components/schemas/customerResponse'
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal Server Error
+    get:
+      tags:
+        - customer
+      summary: get all the  customer from the database
+      description: view all the customers from the database
+      operationId: getCustomer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref : '#/components/schemas/customerResponse'
+
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal Server Error
+  /customer/{id}:
+    delete:
+      tags:
+        - customer
+      summary: deleting a  customer from the database
+      description: delete a customer from the database
+      operationId: deleteCustomer
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the customer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref : '#/components/schemas/customerResponse'
+
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal Server Error
+  /order:
+    post:
+      tags:
+        - order
+      summary: Adding a new order to the Database
+      description: Adding a new customer to the Database
+      operationId: addOrder
+      requestBody:
+        description: Create a new order
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref : '#/components/schemas/orderResponse'
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal Server Error
+  /order/{id}:
+    get:
+      tags:
+        - order
+      summary: get the order details based on the id
+      description: get the order details based on the id
+      operationId: getOrder
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the order
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref : '#/components/schemas/orderResponse'
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal Server Error
+    put:
+      tags:
+        - order
+      summary: update an order in the database
+      description: update order in the database
+      operationId: updateOrder
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the order
+      requestBody:
+        description: update the Order
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref : '#/components/schemas/orderResponse'
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal Server Error
+    delete:
+      tags:
+        - order
+      summary: deleting a  order based on id from the database
+      description: delete a order from the database
+      operationId: deleteOrder
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the order
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref : '#/components/schemas/orderResponse'
+
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal Server Error
+components:
+  schemas:
+    Customer:
+      type: object
+      properties:
+        firstname:
+          type: string
+          minLength: 3
+          maxLength: 20
+          example: basha
+        lastname:
+          type: string
+          minLength: 3
+          maxLength: 20
+          example: shaik
+        email:
+          type: string
+          format: email
+          example: abdul@gmail.com
+    Order:
+      type: object
+      properties:
+        orderType:
+          type: string
+          minLength: 3
+          maxLength: 20
+          example: Clothes
+        status:
+          type: string
+          minLength: 3
+          maxLength: 20
+          example: Delivered
+        customerId:
+          type: string
+          example: 101
+    customerResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1
+        firstname:
+          type: string
+          minLength: 3
+          maxLength: 20
+          example: basha
+        lastname:
+          type: string
+          minLength: 3
+          maxLength: 20
+          example: shaik
+        email:
+          type: string
+          format: email
+          example: abdul@gmail.com
+    orderResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 101
+        orderType:
+          type: string
+          minLength: 3
+          maxLength: 20
+          example: Clothes
+        status:
+          type: string
+          minLength: 3
+          maxLength: 20
+          example: Delivered
+        customerId:
+          type: string
+          example: 101
+
